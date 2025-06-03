@@ -1,0 +1,100 @@
+@if( pokemon() === null){
+  <div class="flex justify-center">
+    <p class="text-2xl font-bold">Loading...</p>
+  </div>
+} @else {
+  @let myPokemon = pokemon()!;
+  <section class="flex flex-col items-center justify-center">
+    <div class="relative w-full max-w-md rounded-3xl shadow-xl p-6"
+    [ngStyle]="{'background': myPokemon.types[0].type.name === 'fire' ? 'linear-gradient(135deg, #ff9800 0%, #ff5722 100%)'
+    : myPokemon.types[0].type.name === 'water' ? 'linear-gradient(135deg, #2196f3 0%, #00bcd4 100%)'
+    : myPokemon.types[0].type.name === 'grass' ? 'linear-gradient(135deg, #8bc34a 0%, #4caf50 100%)'
+    : myPokemon.types[0].type.name === 'electric' ? 'linear-gradient(135deg, #ffe100 0%, #ffd600 100%)' : '#f3f4f6'}">
+      <div class="flex flex-col items-center">
+        <div class="text-white text-3xl font-bold drop-shadow-lg mt-2 mb-1">{{ myPokemon.base_experience }} CP</div>
+        <img class="w-40 h-40 object-contain drop-shadow-lg" [src]="myPokemon.sprites.other?.['official-artwork']?.front_default" alt="{{myPokemon.name}}" />
+        <h1 class="text-3xl font-bold capitalize text-white drop-shadow-lg mb-2">{{myPokemon.name}}</h1>
+        <div class="flex space-x-2 mb-4">
+          @for(type of myPokemon.types; track type.type.name) {
+            <span class="px-3 py-1 rounded-full text-white text-xs font-semibold capitalize shadow-md" [ngClass]="{
+              'bg-yellow-500': type.type.name === 'electric',
+              'bg-blue-500': type.type.name === 'water',
+              'bg-green-500': type.type.name === 'grass',
+              'bg-red-500': type.type.name === 'fire',
+              'bg-gray-500': type.type.name === 'normal',
+              'bg-purple-500': type.type.name === 'poison',
+              'bg-pink-400': type.type.name === 'fairy',
+              'bg-orange-500': type.type.name === 'fighting',
+              'bg-indigo-500': type.type.name === 'psychic',
+              'bg-teal-500': type.type.name === 'ice',
+              'bg-yellow-800': type.type.name === 'ground',
+              'bg-gray-800': type.type.name === 'dark',
+              'bg-lime-500': type.type.name === 'bug',
+              'bg-cyan-500': type.type.name === 'flying',
+              'bg-stone-500': type.type.name === 'rock',
+              'bg-slate-500': type.type.name === 'ghost',
+              'bg-amber-700': type.type.name === 'dragon',
+              'bg-neutral-500': type.type.name === 'steel'
+            }">{{ type.type.name }}</span>
+          }
+        </div>
+        <div class="flex justify-between w-full text-white font-semibold text-lg mb-4">
+          <div class="flex-1 text-center">
+            <div>{{ (myPokemon.weight / 10) | number:'1.1-1' }} KG</div>
+            <div class="text-xs font-normal">Peso</div>
+          </div>
+          <div class="flex-1 text-center">
+            <div>{{ (myPokemon.height / 10) | number:'1.2-2' }} M</div>
+            <div class="text-xs font-normal">Altura</div>
+          </div>
+        </div>
+        <div class="flex justify-between w-full text-white font-semibold text-lg mb-4">
+          <div class="flex-1 text-center">
+            <div>{{ myPokemon.base_experience }}</div>
+            <div class="text-xs font-normal">Experiencia</div>
+          </div>
+          <div class="flex-1 text-center">
+            <div>#{{ myPokemon.id }}</div>
+            <div class="text-xs font-normal">ID</div>
+          </div>
+        </div>
+        <div class="w-full bg-white/80 rounded-2xl p-4 mt-2">
+          <div class="flex flex-col items-center">
+            <h2 class="text-xl font-bold mb-2 text-gray-800">Estadísticas</h2>
+            <div class="w-full space-y-2">
+              @for(stat of myPokemon.stats; track stat.stat.name) {
+                <div>
+                  <div class="flex justify-between text-sm text-gray-700">
+                    <span class="capitalize">{{ stat.stat.name }}</span>
+                    <span class="font-semibold">{{ stat.base_stat }}</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-blue-500 h-2.5 rounded-full" [style.width.%]="stat.base_stat / 2"></div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="flex flex-col items-center mt-4">
+            <h2 class="text-xl font-bold mb-2 text-gray-800">Habilidades</h2>
+            <div class="flex flex-wrap gap-2">
+              @for(ability of myPokemon.abilities; track ability.ability?.name) {
+                <span class="bg-gray-100 px-3 py-1 rounded text-xs capitalize text-gray-700 border border-gray-300">
+                  {{ ability.ability?.name }} @if(ability.is_hidden) { <span class="text-gray-400">(oculta)</span> }
+                </span>
+              }
+            </div>
+          </div>
+          @if(myPokemon.cries.latest) {
+            <div class="flex flex-col items-center mt-4">
+              <h2 class="text-xl font-bold mb-2 text-gray-800">Cry</h2>
+              <audio controls>
+                <source [src]="myPokemon.cries.latest" type="audio/ogg">
+              </audio>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+}
