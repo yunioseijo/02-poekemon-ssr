@@ -2,6 +2,7 @@ const TOTAL_POKEMONS = 100; // Adjust this number based on the total pokemons yo
 const TOTAL_PAGES = 10; // Adjust this number based on the total pages you want to include
 
 ( async () => {
+  console.log('Generating routes for prerendering...');
   const fs = require( 'fs' );
   const pokemonsIds = Array.from({ length: TOTAL_POKEMONS }, (_, i) => i + 1);
   let fileContent = pokemonsIds.map(id => `/pokemon/${id}`).join('\n');

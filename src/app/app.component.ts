@@ -9,5 +9,5 @@ import NavbarComponent from './shared/components/navbar.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'poekemon-ssr';
+  title = 'pokemon-ssr';
 }
