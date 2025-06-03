@@ -37,7 +37,7 @@ export class PokemonsService {
     return this.httpClient
       .get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}`)
       .pipe(
-        tap((pokemon) => console.log('Pokemon loaded:', pokemon)),
+        // tap((pokemon) => console.log('Pokemon loaded:', pokemon)),
         // tap(console.log), //Otra opción, le pasa al log, lo que reciba com argumento
       );
   }
