@@ -1,11 +1,22 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { provideRouter } from '@angular/router';
+import { Component } from '@angular/core';
 
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let compile: HTMLElement;
+  let app: AppComponent;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    compile = fixture.nativeElement as HTMLElement;
+    app = fixture.componentInstance;
   });
 
   it('should create the app', () => {
@@ -14,16 +25,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'pokemon-ssr' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('pokemon-ssr');
+  it(`should render navbar and router-outlet`, () => {
+    expect(compile.querySelector('app-navbar')).toBeTruthy();
+    expect(compile.querySelector('router-outlet')).toBeTruthy();
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, pokemon-ssr');
-  });
+
 });
